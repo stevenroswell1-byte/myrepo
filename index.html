@@ -456,6 +456,190 @@
                 transform: translate(-50%, -50%) scale(1);
             }
         }
+
+        /* Valentine's Letter */
+        .letter-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInBg 0.5s ease-out;
+        }
+
+        .letter-container.show {
+            display: flex;
+        }
+
+        @keyframes fadeInBg {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .envelope {
+            position: relative;
+            width: 350px;
+            height: 250px;
+            cursor: pointer;
+            animation: envelopeFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes envelopeFloat {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 350px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 10px;
+            bottom: 0;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 175px solid transparent;
+            border-right: 175px solid transparent;
+            border-bottom: 120px solid #ff6b9d;
+            top: 0;
+            left: 0;
+            transform-origin: top center;
+            transition: transform 0.5s ease;
+            z-index: 2;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .letter {
+            position: absolute;
+            width: 320px;
+            height: 450px;
+            background: linear-gradient(to bottom, #fff9f9 0%, #ffffff 100%);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            bottom: 20px;
+            left: 15px;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1;
+            overflow-y: auto;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-280px);
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ff9a9e;
+        }
+
+        .letter-header h1 {
+            font-size: 1.8rem;
+            color: #e75480;
+            margin: 0;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .letter-header .hearts {
+            font-size: 1.5rem;
+            margin-top: 5px;
+        }
+
+        .letter-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #4a3f55;
+            text-align: left;
+        }
+
+        .letter-to {
+            font-weight: bold;
+            color: #e75480;
+            margin-bottom: 15px;
+        }
+
+        .letter-from {
+            text-align: right;
+            margin-top: 25px;
+            font-weight: bold;
+            color: #e75480;
+        }
+
+        .letter-body {
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .close-letter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff758c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .close-letter:hover {
+            transform: scale(1.1);
+        }
+
+        .envelope.open .close-letter {
+            display: flex;
+        }
+
+        .tap-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.9rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .envelope.open .tap-hint {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -493,20 +677,19 @@
 
         <!-- Question -->
         <div class="question" id="question">
-               Pingu! 🐧<br>
-            Will you be my <span class="highlight">Valentine</span>?
+            Do dalim bashkë për <span class="highlight">Shën Valentin</span>?
         </div>
 
         <!-- Buttons -->
         <div class="buttons" id="buttons">
-            <button class="btn btn-yes" onclick="sayYes()">Yes! 💖</button>
-            <button class="btn btn-no" id="noBtn">No...</button>
+            <button class="btn btn-yes" onclick="sayYes()">Po! 💖</button>
+            <button class="btn btn-no" id="noBtn">Jo...</button>
         </div>
 
         <!-- Response -->
         <div class="response" id="response">
             Yay! 🎉💕<br>
-            Famideit 🐧✨
+            Fantastike! 🐧✨
         </div>
 
         <!-- Sad message -->
@@ -515,6 +698,33 @@
 
     <!-- Confetti container -->
     <div class="confetti" id="confetti"></div>
+
+    <!-- Letter Container -->
+    <div class="letter-container" id="letterContainer">
+        <div class="envelope" id="envelope" onclick="openLetter()">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap"></div>
+            <div class="letter">
+                <button class="close-letter" onclick="closeLetter(event)">×</button>
+                <div class="letter-header">
+                    <h1>Shën Valentin 2026</h1>
+                    <div class="hearts">💕 💖 💕</div>
+                </div>
+                <div class="letter-content">
+                    <div class="letter-to">Për Klea Murati,</div>
+                    <div class="letter-body">
+                        Në këtë ditë të veçantë të Shën Valentinit, dua të të them se ti je personi më i veçantë në jetën time. Çdo moment me ty është i paçmuar, dhe nuk ka asgjë më të bukur se të jem pranë teje.
+                        <br><br>
+                        A do të më bësh nderin të dalim bashkë dhe ta festojmë këtë ditë të dashurisë së vërtetë?
+                        <br><br>
+                        Me dashuri të përjetshme dhe zemër plot emocione,
+                    </div>
+                    <div class="letter-from">Gabriel Toska 💕</div>
+                </div>
+            </div>
+            <div class="tap-hint">👆 Kliko për të hapur zarfin</div>
+        </div>
+    </div>
 
     <script>
         // Detect if device is mobile
@@ -588,6 +798,26 @@
             
             // Show confetti
             createConfetti();
+
+            // Show letter after a short delay
+            setTimeout(() => {
+                document.getElementById('letterContainer').classList.add('show');
+            }, 1000);
+        }
+
+        // Open the letter
+        function openLetter() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+        }
+
+        // Close the letter
+        function closeLetter(event) {
+            event.stopPropagation();
+            const letterContainer = document.getElementById('letterContainer');
+            letterContainer.classList.remove('show');
+            const envelope = document.getElementById('envelope');
+            envelope.classList.remove('open');
         }
 
         // Create confetti
