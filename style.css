@@ -38,6 +38,7 @@ body {
     font-size: 50px;
     animation: float 10s infinite;
     opacity: 0.3;
+    z-index: 2;
 }
 
 .hearts-background::before {
