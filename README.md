@@ -1,13 +1,15 @@
-# Valentine's Day Proposal Page 💝
+# Valentine's Day Proposal Page 💝🐧
 
-A fun and interactive web page to ask someone to be your Valentine! Features a "Yes" button and a "No" button that playfully runs away when you try to click it, making it impossible to say no! 😊
+A fun and interactive web page to ask someone to be your Valentine! Features an adorable animated penguin holding a heart, with a beautiful envelope opening animation. 😊
 
 ## 🎯 Features
 
-- Beautiful gradient background with floating heart emojis
+- Adorable CSS-only animated penguin with blinking eyes and waving flippers! 🐧
+- Beautiful envelope opening animation with a love letter seal
+- Gradient background with floating heart emojis
 - Interactive "Yes" button with celebration animation
 - Evasive "No" button that moves away on hover (making it unclickable!)
-- Falling hearts animation when "Yes" is clicked
+- Confetti celebration when "Yes" is clicked
 - Fully responsive design for mobile and desktop
 
 ## 🚀 How to Open the Page
@@ -65,22 +67,26 @@ To share the page online with your Valentine:
 ## 📱 How It Works
 
 1. Open the page in a web browser
-2. Your Valentine will see the question: "Will you be my Valentine? 💝"
-3. Two buttons appear: "Yes! 💕" and "No"
-4. If they try to click "No", the button playfully moves away!
-5. When they click "Yes! 💕", a beautiful celebration appears with falling hearts! 🎊
+2. Click on the envelope with the love letter seal to open it 💌
+3. A cute penguin appears holding a heart! 🐧💕
+4. Your Valentine will see the question: "Will you be my Valentine?"
+5. Two buttons appear: "Yes! 💖" and "No..."
+6. If they try to click "No", the button playfully moves away!
+7. When they click "Yes! 💖", the penguin jumps for joy with confetti celebration! 🎊
 
 ## 💻 Files
 
-- `index.html` - The main HTML page
-- `style.css` - All the beautiful styling and animations
-- `script.js` - The interactive JavaScript that makes the buttons work
+- `index.html` - The main HTML page with the adorable penguin and all styles/scripts embedded
+- `valentine.html` - Alternative version with the same penguin design
+- `style.css` - (Legacy) Styling for simplified version
+- `script.js` - (Legacy) JavaScript for simplified version
 
 ## 🎨 Customization
 
 Feel free to customize the page:
-- Edit the question in `index.html`
-- Change colors in `style.css`
-- Adjust animations and behavior in `script.js`
+- Edit the question and penguin styles in `index.html`
+- Change colors, animations, and penguin appearance in the `<style>` section
+- Adjust interactive behavior in the `<script>` section at the bottom of `index.html`
+- The penguin is built entirely with CSS - no images required!
 
-Enjoy and good luck! 💖
+Enjoy and good luck! 💖🐧
