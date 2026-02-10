@@ -573,7 +573,11 @@
             padding: 30px;
             bottom: 20px;
             left: 15px;
-            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                        top 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        left 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        height 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1;
             overflow-y: auto;
         }
