@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💕 A Special Question for You 💕</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -18,7 +20,7 @@
             align-items: center;
             background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 50%, #ff1493 100%);
             font-family: 'Georgia', 'Times New Roman', serif;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .container {
@@ -72,19 +74,96 @@
             display: none;
         }
 
-        .success-section {
-            display: none;
+        /* Penguin styles */
+        .penguin-container {
+            cursor: pointer;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
         }
 
-        .success-section.visible {
+        .penguin {
+            font-size: 100px;
             display: block;
-            animation: popIn 0.5s ease-out;
+            animation: waddle 1s ease-in-out infinite;
+            transition: transform 0.3s;
+        }
+
+        .penguin:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes waddle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        .penguin-message {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 1rem;
+            color: #e91e63;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .penguin-message.visible {
+            opacity: 1;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .penguin-message::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0 10px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+        /* No button message */
+        .no-message {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff69b4;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 200;
+        }
+
+        .no-message.visible {
+            opacity: 1;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(-50%) rotate(0); }
+            25% { transform: translateX(-50%) rotate(-5deg); }
+            75% { transform: translateX(-50%) rotate(5deg); }
         }
 
         @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            50% { transform: translateX(-50%) scale(1.1); }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
         }
 
         h1 {
@@ -92,18 +171,6 @@
             font-size: 2.5rem;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.2);
-        }
-
-        .cute-emoji {
-            font-size: 80px;
-            margin-bottom: 20px;
-            display: block;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
 
         .question {
@@ -150,9 +217,26 @@
             position: relative;
         }
 
-        .happy-face {
-            font-size: 120px;
+        /* Success Section - Famideit message */
+        .success-section {
+            display: none;
+        }
+
+        .success-section.visible {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .famideit-text {
+            font-size: 3rem;
+            color: #e91e63;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.3);
             margin-bottom: 20px;
+        }
+
+        .happy-penguin {
+            font-size: 100px;
             display: block;
             animation: bounce 1s ease-in-out infinite;
         }
@@ -160,13 +244,6 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
-        }
-
-        .success-text {
-            font-size: 2.5rem;
-            color: #e91e63;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.3);
         }
 
         .extra-hearts {
@@ -178,6 +255,120 @@
         @keyframes sparkle {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+        }
+
+        .continue-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #e91e63 0%, #ff69b4 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(233, 30, 99, 0.6);
+        }
+
+        /* Envelope Section */
+        .envelope-section {
+            display: none;
+        }
+
+        .envelope-section.visible {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .envelope {
+            font-size: 150px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .envelope:hover {
+            transform: scale(1.1);
+        }
+
+        .envelope-text {
+            font-size: 1.5rem;
+            color: #c2185b;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Card Section */
+        .card-section {
+            display: none;
+        }
+
+        .card-section.visible {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .valentine-card {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe4e8 100%);
+            border: 3px solid #ff69b4;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .card-header {
+            font-size: 2rem;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        .card-penguin {
+            font-size: 80px;
+            margin: 20px 0;
+        }
+
+        .card-message {
+            font-size: 1.3rem;
+            color: #c2185b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-signature {
+            font-size: 1.5rem;
+            color: #e91e63;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        .card-hearts {
+            font-size: 30px;
+            margin-top: 15px;
+        }
+
+        .download-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #e91e63 0%, #ff69b4 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(233, 30, 99, 0.6);
         }
 
         .celebration {
@@ -212,26 +403,82 @@
 <body>
     <div class="hearts" id="hearts"></div>
     <div class="celebration" id="celebration"></div>
+    <div class="no-message" id="noMessage"></div>
 
     <div class="container">
+        <!-- Question Section with Penguin -->
         <div class="question-section" id="questionSection">
-            <span class="cute-emoji">🥺💕</span>
+            <div class="penguin-container" onclick="penguinClick()">
+                <div class="penguin-message" id="penguinMessage"></div>
+                <span class="penguin">🐧💕</span>
+            </div>
             <h1>Hey Beautiful!</h1>
             <p class="question">Will you be my Valentine? 💝</p>
             <div class="buttons">
                 <button class="btn btn-yes" onclick="sayYes()">Yes! 💖</button>
-                <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="clickNo()">No</button>
             </div>
         </div>
 
+        <!-- Success Section - Famideit message -->
         <div class="success-section" id="successSection">
-            <span class="happy-face">😊💖</span>
-            <p class="success-text">Famideit &lt;3</p>
+            <span class="happy-penguin">🐧💖</span>
+            <p class="famideit-text">famideit! 💕</p>
             <div class="extra-hearts">💕💗💕💗💕</div>
+            <button class="continue-btn" onclick="showEnvelope()">Open Your Surprise! 💌</button>
+        </div>
+
+        <!-- Envelope Section -->
+        <div class="envelope-section" id="envelopeSection">
+            <div class="envelope" onclick="openCard()">💌</div>
+            <p class="envelope-text">Tap the envelope to open! 💕</p>
+        </div>
+
+        <!-- Card Section -->
+        <div class="card-section" id="cardSection">
+            <div class="valentine-card" id="valentineCard">
+                <div class="card-header">💕 Happy Valentine's Day! 💕</div>
+                <div class="card-penguin">🐧❤️🐧</div>
+                <p class="card-message">
+                    You make my heart flutter like a penguin's wings! 
+                    Every moment with you is magical. 
+                    Thank you for being my Valentine! 💝
+                </p>
+                <div class="card-signature">With all my love,<br>Your Penguin 🐧💕</div>
+                <div class="card-hearts">💕💗💖💝💘</div>
+            </div>
+            <button class="download-btn" onclick="downloadCard()">Download Card as PDF 📄</button>
         </div>
     </div>
 
     <script>
+        // Penguin messages when clicked
+        const penguinMessages = [
+            "Please say yes! 🥺",
+            "I love you! 💕",
+            "You're so cute! 💖",
+            "Be my Valentine? 💝",
+            "I'll waddle for you! 🐧",
+            "Pretty please? 🥺💕",
+            "*happy penguin noises* 💗",
+            "You make my heart melt! ❤️"
+        ];
+
+        // No button messages
+        const noMessages = [
+            "Are you sure? 🥺",
+            "Think again! 💕",
+            "You can't escape! 😄",
+            "Nice try! 💖",
+            "The penguin is sad now 🐧😢",
+            "Please reconsider! 💝",
+            "Wrong button! 😊",
+            "Oops, try the other one! 💗"
+        ];
+
+        let penguinMessageIndex = 0;
+        let noMessageIndex = 0;
+
         // Create falling hearts background
         function createHearts() {
             const heartsContainer = document.getElementById('hearts');
@@ -249,20 +496,46 @@
             }
         }
 
+        // Penguin click handler
+        function penguinClick() {
+            const messageEl = document.getElementById('penguinMessage');
+            messageEl.textContent = penguinMessages[penguinMessageIndex];
+            messageEl.classList.add('visible');
+            
+            penguinMessageIndex = (penguinMessageIndex + 1) % penguinMessages.length;
+            
+            setTimeout(() => {
+                messageEl.classList.remove('visible');
+            }, 2000);
+        }
+
+        // No button click handler
+        function clickNo() {
+            const noMessageEl = document.getElementById('noMessage');
+            noMessageEl.textContent = noMessages[noMessageIndex];
+            noMessageEl.classList.add('visible');
+            
+            noMessageIndex = (noMessageIndex + 1) % noMessages.length;
+            
+            setTimeout(() => {
+                noMessageEl.classList.remove('visible');
+            }, 1500);
+            
+            moveButton();
+        }
+
         // Move the No button when hovered
         function moveButton() {
             const btn = document.getElementById('noBtn');
             const container = document.querySelector('.container');
             const containerRect = container.getBoundingClientRect();
             
-            // Calculate random position within the container bounds
             const maxX = containerRect.width - btn.offsetWidth - 40;
             const maxY = containerRect.height - btn.offsetHeight - 40;
             
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
             
-            // Sometimes make it disappear briefly
             if (Math.random() > 0.7) {
                 btn.style.opacity = '0';
                 setTimeout(() => {
@@ -285,6 +558,47 @@
             createConfetti();
         }
 
+        // Show envelope section
+        function showEnvelope() {
+            document.getElementById('successSection').classList.remove('visible');
+            document.getElementById('successSection').style.display = 'none';
+            document.getElementById('envelopeSection').classList.add('visible');
+        }
+
+        // Open the card
+        function openCard() {
+            document.getElementById('envelopeSection').classList.remove('visible');
+            document.getElementById('envelopeSection').style.display = 'none';
+            document.getElementById('cardSection').classList.add('visible');
+            createConfetti();
+        }
+
+        // Download card as PDF
+        function downloadCard() {
+            const card = document.getElementById('valentineCard');
+            
+            html2canvas(card, {
+                scale: 2,
+                backgroundColor: null,
+                useCORS: true
+            }).then(canvas => {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 180;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                const x = (210 - imgWidth) / 2;
+                const y = (297 - imgHeight) / 2;
+                
+                pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+                pdf.save('valentine-card.pdf');
+            }).catch(error => {
+                console.error('PDF generation failed:', error);
+                alert('Sorry, PDF download failed. Please try taking a screenshot instead! 📸');
+            });
+        }
+
         // Create confetti celebration
         function createConfetti() {
             const celebration = document.getElementById('celebration');
@@ -300,7 +614,6 @@
                     confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     celebration.appendChild(confetti);
                     
-                    // Remove confetti after animation
                     setTimeout(() => confetti.remove(), 3000);
                 }, i * 30);
             }
