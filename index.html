@@ -521,12 +521,12 @@
             top: 0;
             left: 0;
             transform-origin: top center;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 2;
         }
 
         .envelope.open .envelope-flap {
-            transform: rotateX(180deg);
+            transform: rotateX(180deg) translateZ(1px);
         }
 
         .letter {
@@ -590,6 +590,10 @@
         .letter-body {
             margin: 20px 0;
             font-style: italic;
+            font-size: 2.5rem;
+            color: #ff0000;
+            font-weight: bold;
+            text-align: center;
         }
 
         .close-letter {
@@ -639,6 +643,39 @@
 
         .envelope.open .tap-hint {
             display: none;
+        }
+
+        /* Download buttons */
+        .download-buttons {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .envelope.open .download-buttons {
+            display: flex;
+        }
+
+        .btn-download {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(255, 117, 140, 0.4);
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.6);
         }
     </style>
 </head>
@@ -711,15 +748,15 @@
                     <div class="hearts">💕 💖 💕</div>
                 </div>
                 <div class="letter-content">
-                    <div class="letter-to">Për Klea Murati,</div>
+                    <div class="letter-to">Per Klea Murati</div>
                     <div class="letter-body">
-                        Në këtë ditë të veçantë të Shën Valentinit, dua të të them se ti je personi më i veçantë në jetën time. Çdo moment me ty është i paçmuar, dhe nuk ka asgjë më të bukur se të jem pranë teje.
-                        <br><br>
-                        A do të më bësh nderin të dalim bashkë dhe ta festojmë këtë ditë të dashurisë së vërtetë?
-                        <br><br>
-                        Me dashuri të përjetshme dhe zemër plot emocione,
+                        Ftese per Shen Valentin
                     </div>
-                    <div class="letter-from">Gabriel Toska 💕</div>
+                    <div class="letter-from">Na Gabriel Toska 💕</div>
+                </div>
+                <div class="download-buttons">
+                    <button class="btn-download" onclick="downloadAsImage(event)">📥 Download as Image</button>
+                    <button class="btn-download" onclick="downloadAsPDF(event)">📄 Download as PDF</button>
                 </div>
             </div>
             <div class="tap-hint">👆 Kliko për të hapur zarfin</div>
@@ -818,6 +855,163 @@
             letterContainer.classList.remove('show');
             const envelope = document.getElementById('envelope');
             envelope.classList.remove('open');
+        }
+
+        // Download as Image
+        function downloadAsImage(event) {
+            event.stopPropagation();
+            const letter = document.querySelector('.letter');
+            
+            // Create a canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            const scale = 2; // Higher quality
+            canvas.width = letter.offsetWidth * scale;
+            canvas.height = letter.offsetHeight * scale;
+            ctx.scale(scale, scale);
+            
+            // Fill background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, letter.offsetWidth, letter.offsetHeight);
+            
+            // Draw letter content
+            const letterRect = letter.getBoundingClientRect();
+            
+            // Get computed styles
+            const headerText = document.querySelector('.letter-header h1').textContent;
+            const hearts = document.querySelector('.letter-header .hearts').textContent;
+            const toText = document.querySelector('.letter-to').textContent;
+            const bodyText = document.querySelector('.letter-body').textContent.trim();
+            const fromText = document.querySelector('.letter-from').textContent;
+            
+            // Draw header
+            ctx.fillStyle = '#e75480';
+            ctx.font = 'bold 28px "Brush Script MT", cursive';
+            ctx.textAlign = 'center';
+            ctx.fillText(headerText, letter.offsetWidth / 2, 50);
+            
+            ctx.font = '24px sans-serif';
+            ctx.fillText(hearts, letter.offsetWidth / 2, 80);
+            
+            // Draw border
+            ctx.strokeStyle = '#ff9a9e';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(30, 95);
+            ctx.lineTo(letter.offsetWidth - 30, 95);
+            ctx.stroke();
+            
+            // Draw "to" text
+            ctx.fillStyle = '#e75480';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(toText, letter.offsetWidth / 2, 130);
+            
+            // Draw main body text (red and bigger)
+            ctx.fillStyle = '#ff0000';
+            ctx.font = 'italic bold 36px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(bodyText, letter.offsetWidth / 2, 220);
+            
+            // Draw "from" text
+            ctx.fillStyle = '#e75480';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(fromText, letter.offsetWidth / 2, 300);
+            
+            // Download
+            const link = document.createElement('a');
+            link.download = 'Shen-Valentin-2026.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Download as PDF
+        function downloadAsPDF(event) {
+            event.stopPropagation();
+            
+            // For PDF, we'll create a simple text-based version
+            const letter = document.querySelector('.letter');
+            const headerText = document.querySelector('.letter-header h1').textContent;
+            const toText = document.querySelector('.letter-to').textContent;
+            const bodyText = document.querySelector('.letter-body').textContent.trim();
+            const fromText = document.querySelector('.letter-from').textContent;
+            
+            // Create a printable version
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Shen Valentin 2026</title>
+                    <style>
+                        @page { margin: 2cm; }
+                        body {
+                            font-family: Arial, sans-serif;
+                            max-width: 600px;
+                            margin: 0 auto;
+                            padding: 40px;
+                            background: linear-gradient(to bottom, #fff9f9 0%, #ffffff 100%);
+                        }
+                        .header {
+                            text-align: center;
+                            margin-bottom: 30px;
+                            padding-bottom: 20px;
+                            border-bottom: 2px solid #ff9a9e;
+                        }
+                        .header h1 {
+                            font-size: 2rem;
+                            color: #e75480;
+                            margin: 0;
+                            font-family: cursive;
+                        }
+                        .hearts {
+                            font-size: 1.5rem;
+                            margin-top: 10px;
+                        }
+                        .to {
+                            font-weight: bold;
+                            color: #e75480;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                        .body {
+                            margin: 30px 0;
+                            font-style: italic;
+                            font-size: 2.5rem;
+                            color: #ff0000;
+                            font-weight: bold;
+                            text-align: center;
+                        }
+                        .from {
+                            text-align: center;
+                            margin-top: 30px;
+                            font-weight: bold;
+                            color: #e75480;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>${headerText}</h1>
+                        <div class="hearts">💕 💖 💕</div>
+                    </div>
+                    <div class="to">${toText}</div>
+                    <div class="body">${bodyText}</div>
+                    <div class="from">${fromText}</div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            
+            // Wait for content to load then print
+            setTimeout(() => {
+                printWindow.print();
+                // Close after a delay to allow print dialog
+                setTimeout(() => printWindow.close(), 100);
+            }, 500);
         }
 
         // Create confetti
