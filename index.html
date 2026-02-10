@@ -69,6 +69,7 @@
         .penguin-container {
             margin-bottom: 2rem;
             animation: waddle 2s ease-in-out infinite;
+            position: relative;
         }
 
         @keyframes waddle {
@@ -426,34 +427,67 @@
             background: #a8d8ea;
         }
 
-        /* Sad message */
+        /* Sad message - Thought bubble from penguin */
         .sad-message {
             display: none;
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            top: -120px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
+            transform: translateX(-50%);
+            font-size: 1.3rem;
             color: #4a3f55;
             font-weight: bold;
             z-index: 200;
             pointer-events: none;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            background: white;
+            padding: 20px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 280px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Thought bubble tail */
+        .sad-message::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sad-message::after {
+            content: '';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .sad-message.show {
             display: block;
-            animation: fadeIn 0.3s ease-out;
+            animation: thoughtBubbleAppear 0.3s ease-out;
         }
 
-        @keyframes fadeIn {
+        @keyframes thoughtBubbleAppear {
             0% {
                 opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
+                transform: translateX(-50%) scale(0.5);
             }
             100% {
                 opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
+                transform: translateX(-50%) scale(1);
             }
         }
 
@@ -539,13 +573,21 @@
             padding: 30px;
             bottom: 20px;
             left: 15px;
-            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1;
             overflow-y: auto;
         }
 
         .envelope.open .letter {
-            transform: translateY(-280px);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 400;
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            max-height: 80vh;
         }
 
         .letter-header {
@@ -710,6 +752,8 @@
                 </div>
                 <div class="heart-held">💕</div>
             </div>
+            <!-- Sad message thought bubble -->
+            <div class="sad-message" id="sadMessage">Qysh jo ë!? Ta choj me kokë</div>
         </div>
 
         <!-- Question -->
@@ -728,9 +772,6 @@
             Yay! 🎉💕<br>
              Famideit ! 🐧✨
         </div>
-
-        <!-- Sad message -->
-        <div class="sad-message" id="sadMessage">Qysh jo ë!? Ta choj me kokë</div>
     </div>
 
     <!-- Confetti container -->
