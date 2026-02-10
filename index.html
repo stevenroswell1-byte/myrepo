@@ -426,6 +426,36 @@
         .penguin-container.sad .cheek {
             background: #a8d8ea;
         }
+        
+        /* Laughing penguin animation */
+        .penguin-container.laughing {
+            animation: laugh 0.6s ease-in-out 3;
+        }
+
+        @keyframes laugh {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-5deg) scale(1.05);
+            }
+            75% {
+                transform: rotate(5deg) scale(1.05);
+            }
+        }
+        
+        .penguin-container.laughing .eye {
+            animation: laughEyes 0.6s ease-in-out 3;
+        }
+        
+        @keyframes laughEyes {
+            0%, 100% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(0.3);
+            }
+        }
 
         /* Sad message - Thought bubble from penguin */
         .sad-message {
@@ -481,6 +511,70 @@
         }
 
         @keyframes thoughtBubbleAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+        
+        /* Laugh message - Speech bubble from penguin */
+        .laugh-message {
+            display: none;
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.4rem;
+            color: #4a3f55;
+            font-weight: bold;
+            z-index: 200;
+            pointer-events: none;
+            background: white;
+            padding: 20px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 280px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Speech bubble tail */
+        .laugh-message::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .laugh-message::after {
+            content: '';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .laugh-message.show {
+            display: block;
+            animation: speechBubbleAppear 0.3s ease-out;
+        }
+
+        @keyframes speechBubbleAppear {
             0% {
                 opacity: 0;
                 transform: translateX(-50%) scale(0.5);
@@ -567,41 +661,61 @@
             position: absolute;
             width: 320px;
             height: 450px;
-            background: linear-gradient(to bottom, #fff9f9 0%, #ffffff 100%);
-            border-radius: 15px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
-            padding: 40px;
+            background: linear-gradient(135deg, #fff9f9 0%, #ffffff 50%, #fff5f8 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(231, 84, 128, 0.3), 
+                        0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+                        0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 50px;
             bottom: 20px;
             left: 15px;
             transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
                         top 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
                         left 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-                        width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-                        height 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                        width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1;
             overflow-y: auto;
-            border: 3px double #e75480;
+            border: 5px double #e75480;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #fff9f9 0%, #ffffff 50%, #fff5f8 100%);
         }
 
         .envelope.open .letter {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(1) !important;
             z-index: 400;
-            width: 95%;
-            max-width: 700px;
-            height: auto;
+            width: 90%;
+            max-width: 900px;
+            height: fit-content !important;
             max-height: 90vh;
+            padding: 25px 35px;
+            animation: popupAppear 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes popupAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0.3);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
         }
 
         .letter-header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            border-bottom: 3px double #ff9a9e;
-            background: linear-gradient(to right, transparent, rgba(255, 154, 158, 0.1), transparent);
+            margin-bottom: 15px;
+            padding: 12px 20px;
+            border-bottom: 4px double #ff9a9e;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 154, 158, 0.15), rgba(255, 182, 193, 0.2));
             position: relative;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.2);
         }
         
         .letter-header::before,
@@ -610,25 +724,50 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1.2rem;
-            color: #ff9a9e;
+            font-size: 1.5rem;
+            color: #ff758c;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1.3);
+            }
         }
         
         .letter-header::before {
-            left: 10px;
+            left: 15px;
         }
         
         .letter-header::after {
-            right: 10px;
+            right: 15px;
         }
 
         .letter-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: #e75480;
             margin: 0;
             font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
-            text-shadow: 2px 2px 4px rgba(231, 84, 128, 0.2);
+            text-shadow: 3px 3px 6px rgba(231, 84, 128, 0.3),
+                         0 0 20px rgba(255, 182, 193, 0.4);
             letter-spacing: 2px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 3px 3px 6px rgba(231, 84, 128, 0.3),
+                             0 0 20px rgba(255, 182, 193, 0.4);
+            }
+            50% {
+                text-shadow: 3px 3px 8px rgba(231, 84, 128, 0.5),
+                             0 0 30px rgba(255, 182, 193, 0.6);
+            }
         }
 
         .letter-header .hearts {
@@ -647,11 +786,11 @@
         }
 
         .letter-content {
-            font-size: 1.1rem;
-            line-height: 2;
+            font-size: 1rem;
+            line-height: 1.6;
             color: #4a3f55;
             text-align: left;
-            padding: 20px;
+            padding: 12px;
             background: linear-gradient(to bottom, rgba(255, 245, 248, 0.3), transparent);
             border-radius: 10px;
         }
@@ -659,8 +798,8 @@
         .letter-to {
             font-weight: bold;
             color: #e75480;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
             text-align: center;
             font-style: italic;
             position: relative;
@@ -675,10 +814,10 @@
 
         .letter-from {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 15px;
             font-weight: bold;
             color: #e75480;
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-style: italic;
             position: relative;
         }
@@ -691,18 +830,34 @@
         }
 
         .letter-body {
-            margin: 30px 0;
+            margin: 15px 0;
             font-style: italic;
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #ff0066;
             font-weight: bold;
             text-align: center;
-            text-shadow: 2px 2px 4px rgba(255, 0, 102, 0.2);
+            text-shadow: 3px 3px 6px rgba(255, 0, 102, 0.3),
+                         0 0 20px rgba(255, 105, 180, 0.4);
             font-family: 'Georgia', serif;
-            padding: 20px;
-            border-top: 2px solid rgba(231, 84, 128, 0.2);
-            border-bottom: 2px solid rgba(231, 84, 128, 0.2);
-            background: linear-gradient(to right, transparent, rgba(255, 230, 240, 0.3), transparent);
+            padding: 18px;
+            border-top: 3px solid rgba(231, 84, 128, 0.3);
+            border-bottom: 3px solid rgba(231, 84, 128, 0.3);
+            background: linear-gradient(135deg, 
+                rgba(255, 230, 240, 0.4), 
+                rgba(255, 182, 193, 0.2), 
+                rgba(255, 230, 240, 0.4));
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.2);
+            animation: bodyPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes bodyPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
         }
 
         .close-letter {
@@ -820,6 +975,8 @@
             </div>
             <!-- Sad message thought bubble -->
             <div class="sad-message" id="sadMessage">Qysh jo ë!? Ta choj me kokë</div>
+            <!-- Laugh message speech bubble -->
+            <div class="laugh-message" id="laughMessage">Rri se kam guduli 😂</div>
         </div>
 
         <!-- Question -->
@@ -1138,8 +1295,48 @@
             }
         }
 
+        // Make penguin laugh
+        function makePenguinLaugh() {
+            const penguin = document.getElementById('penguin');
+            const laughMessage = document.getElementById('laughMessage');
+            
+            // Remove sad state if present
+            penguin.classList.remove('sad');
+            const sadMessage = document.getElementById('sadMessage');
+            sadMessage.classList.remove('show');
+            
+            // Add laughing animation
+            penguin.classList.add('laughing');
+            laughMessage.classList.add('show');
+            
+            // Remove after animation
+            setTimeout(() => {
+                penguin.classList.remove('laughing');
+                laughMessage.classList.remove('show');
+            }, 2000);
+        }
+
         // Initialize
         createFloatingHearts();
+        
+        // Setup penguin click/tap interaction
+        const penguin = document.getElementById('penguin');
+        penguin.style.cursor = 'pointer';
+        
+        if (isMobile()) {
+            // Mobile: tap
+            penguin.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                makePenguinLaugh();
+            });
+            penguin.addEventListener('click', (e) => {
+                e.preventDefault();
+                makePenguinLaugh();
+            });
+        } else {
+            // Desktop: click
+            penguin.addEventListener('click', makePenguinLaugh);
+        }
         
         // Setup No button behavior based on device
         const noBtn = document.getElementById('noBtn');
