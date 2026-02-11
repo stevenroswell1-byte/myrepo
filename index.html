@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question 🐧</title>
+    <title>Shën Valentin 🐧</title>
     <style>
         * {
             margin: 0;
@@ -620,11 +620,43 @@
 
         .envelope {
             position: relative;
-            width: 350px;
-            height: 250px;
+            width: 360px;
+            height: 240px;
             cursor: pointer;
             animation: envelopeFloat 2s ease-in-out infinite;
             perspective: 1000px;
+        }
+
+        /* Decorative hearts on sides */
+        .envelope::before {
+            content: '💕';
+            position: absolute;
+            font-size: 1.6rem;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            animation: rotateSide 3s ease-in-out infinite;
+        }
+
+        .envelope::after {
+            content: '💕';
+            position: absolute;
+            font-size: 1.6rem;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            animation: rotateSide 3s ease-in-out infinite;
+        }
+
+        @keyframes rotateSide {
+            0%, 100% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50%) rotate(5deg);
+            }
         }
 
         .envelope.open {
@@ -636,52 +668,265 @@
                 transform: translateY(-10px);
             }
             50% {
-                transform: translateY(10px);
+                transform: translateY(8px);
+            }
+        }
+
+        /* Gold shimmer animation */
+        @keyframes goldShimmer {
+            0%, 100% {
+                box-shadow: 0 0 0px rgba(211, 175, 110, 0),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                            0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 15px rgba(211, 175, 110, 0.3),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                            0 1px 3px rgba(0, 0, 0, 0.1);
             }
         }
 
         .envelope-back {
             position: absolute;
-            width: 350px;
-            height: 200px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            border-radius: 10px;
+            width: 360px;
+            height: 220px;
+            background: linear-gradient(to bottom, #f5e6d3 0%, #ede4ce 100%);
+            border-radius: 4px 4px 12px 12px;
             bottom: 0;
+            left: 0;
+            z-index: 1;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                        0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: goldShimmer 4s ease-in-out infinite;
+        }
+
+        /* Decorative pattern on envelope back */
+        .envelope-back::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(211, 175, 110, 0.08) 35px,
+                    rgba(211, 175, 110, 0.08) 36px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(211, 175, 110, 0.06) 30px,
+                    rgba(211, 175, 110, 0.06) 31px
+                );
+            pointer-events: none;
             z-index: 1;
         }
 
+        /* Ornamental corners */
+        .envelope-inner::before {
+            content: '✦';
+            position: absolute;
+            font-size: 0.8rem;
+            color: rgba(211, 175, 110, 0.4);
+            top: 12px;
+            left: 12px;
+            z-index: 3;
+        }
+
+        .envelope-inner::after {
+            content: '✦';
+            position: absolute;
+            font-size: 0.8rem;
+            color: rgba(211, 175, 110, 0.4);
+            top: 12px;
+            right: 12px;
+            z-index: 3;
+        }
+
+        /* Gold border frame with corner ornaments */
+        .envelope-back::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 2px solid rgba(211, 175, 110, 0.25);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Accent line on envelope */
+        .layer-accent {
+            position: absolute;
+            width: 90%;
+            height: 3px;
+            background: linear-gradient(to right, transparent 0%, rgba(201, 24, 90, 0.3) 25%, rgba(201, 24, 90, 0.3) 75%, transparent 100%);
+            top: 100px;
+            left: 5%;
+            z-index: 3;
+            border-radius: 2px;
+        }
+
+        /* Center heart on unopened envelope */
+        .layer-accent::before {
+            content: '💕';
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(211, 175, 110, 0.5);
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        /* Corner ornaments - top right */
+        .layer-accent::after {
+            content: '✿';
+            position: absolute;
+            font-size: 1.2rem;
+            color: rgba(211, 175, 110, 0.6);
+            top: -55px;
+            right: 15px;
+        }
+
+        /* Wax seal */
+        .wax-seal {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 35% 35%, #e8547a 0%, #d32f5e 30%, #b71a52 60%, #8b1552 100%);
+            border-radius: 50%;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            box-shadow: 0 8px 20px rgba(139, 21, 82, 0.4),
+                        inset -3px -3px 6px rgba(0, 0, 0, 0.2),
+                        inset 3px 3px 6px rgba(255, 255, 255, 0.15),
+                        0 0 0 2px rgba(211, 175, 110, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .envelope:hover .wax-seal {
+            transform: translateX(-50%) scale(1.08);
+            box-shadow: 0 10px 25px rgba(139, 21, 82, 0.5),
+                        inset -3px -3px 6px rgba(0, 0, 0, 0.2),
+                        inset 3px 3px 6px rgba(255, 255, 255, 0.15),
+                        0 0 0 2px rgba(211, 175, 110, 0.6);
+        }
+
+        /* Envelope flap */
         .envelope-flap {
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 175px solid transparent;
-            border-right: 175px solid transparent;
-            border-bottom: 120px solid #ff6b9d;
+            border-left: 180px solid transparent;
+            border-right: 180px solid transparent;
+            border-top: 120px solid #d32f5e;
             top: 0;
             left: 0;
             transform-origin: top center;
             transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 3;
+            z-index: 5;
+            filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Decorative line on flap */
+        .envelope-flap::after {
+            content: '✦';
+            position: absolute;
+            width: 200%;
+            height: 40px;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(211, 175, 110, 0.4);
+            letter-spacing: 20px;
+            z-index: 1;
+        }
+
+        /* Inner gradient on flap */
+        .envelope-flap::before {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 120px;
+            background: linear-gradient(135deg, #e34a6a 0%, #d32f5e 50%, #b71a52 100%);
+            top: -120px;
+            left: -180px;
+            z-index: -1;
         }
 
         .envelope.open .envelope-flap {
-            transform: rotateX(180deg);
+            transform: rotateX(-180deg) perspective(800px);
+        }
+
+        /* Inner envelope (letter area visible when open) */
+        .envelope-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 35% 35%, #e8547a 0%, #d32f5e 30%, #b71a52 60%, #8b1552 100%);
+            border-radius: 50%;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            box-shadow: 0 8px 20px rgba(139, 21, 82, 0.4),
+                        inset -3px -3px 6px rgba(0, 0, 0, 0.2),
+                        inset 3px 3px 6px rgba(255, 255, 255, 0.15),
+                        0 0 0 2px rgba(211, 175, 110, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .envelope .wax-seal::before {
+            content: '💕';
+            font-size: 1.8rem;
         }
 
         /* Letter - Completely hidden inside envelope when closed */
         .letter {
             position: absolute;
-            width: 300px;
-            height: 160px;
-            background: linear-gradient(135deg, #fff9f9 0%, #ffffff 50%, #fff5f8 100%);
-            border-radius: 10px 10px 0 0;
+            width: 310px;
+            height: 170px;
+            background: #fffaf5;
+            border-radius: 6px 6px 0 0;
             padding: 20px;
-            bottom: 10px;
-            left: 25px;
+            bottom: 20px;
+            left: 15px;
             z-index: 2;
             overflow: hidden;
-            border: 3px solid #e75480;
-            box-shadow: 0 5px 15px rgba(231, 84, 128, 0.2);
+            border: none;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
             opacity: 0;
             pointer-events: none;
             visibility: hidden;
@@ -695,17 +940,17 @@
             transform: translate(-50%, -50%) !important;
             z-index: 500 !important;
             width: 90% !important;
-            max-width: 1200px !important;
+            max-width: 650px !important;
             height: auto !important;
             max-height: 90vh !important;
             overflow-y: auto !important;
             padding: 50px 60px !important;
-            border-radius: 25px !important;
+            border-radius: 5px !important;
             animation: letterExpand 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
-            box-shadow: 0 25px 80px rgba(231, 84, 128, 0.5), 
-                        0 0 0 2px rgba(255, 255, 255, 0.9) inset,
-                        0 15px 40px rgba(0, 0, 0, 0.4) !important;
-            border: 6px double #e75480 !important;
+            background: linear-gradient(180deg, #fffdf8 0%, #fff9f0 30%, #fff5ec 100%) !important;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35),
+                        0 0 0 1px rgba(200, 170, 130, 0.3) !important;
+            border: none !important;
             opacity: 1 !important;
             pointer-events: auto !important;
             visibility: visible !important;
@@ -726,66 +971,42 @@
 
         .letter-header {
             text-align: center;
-            margin-bottom: 20px;
-            padding: 15px 20px;
-            border-bottom: 4px double #ff9a9e;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 154, 158, 0.15), rgba(255, 182, 193, 0.2));
+            margin-bottom: 25px;
+            padding: 20px 0;
             position: relative;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.2);
         }
-        
-        .letter-header::before,
-        .letter-header::after {
-            content: '✦';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            color: #ff758c;
-            animation: sparkle 2s ease-in-out infinite;
-        }
-        
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 0.5;
-                transform: translateY(-50%) scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-50%) scale(1.3);
-            }
-        }
-        
+
         .letter-header::before {
-            left: 15px;
+            display: none;
         }
-        
+
         .letter-header::after {
-            right: 15px;
+            display: none;
         }
 
         .letter-header h1 {
-            font-size: 2.8rem;
-            color: #e75480;
+            font-size: 2.6rem;
+            color: #c9185a;
             margin: 0;
             font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
-            text-shadow: 3px 3px 6px rgba(231, 84, 128, 0.3),
-                         0 0 20px rgba(255, 182, 193, 0.4);
             letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(201, 24, 90, 0.1);
         }
 
         .letter-header .hearts {
-            font-size: 2.5rem;
-            margin-top: 10px;
+            font-size: 1.8rem;
+            margin-top: 12px;
+            letter-spacing: 12px;
+            color: #e75480;
         }
 
         .letter-content {
-            font-size: 1.15rem;
-            line-height: 1.9;
-            color: #4a3f55;
-            text-align: left;
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #5a4a3a;
+            text-align: center;
             display: none;
+            padding: 20px 0;
         }
 
         .letter.expanded .letter-content {
@@ -793,95 +1014,94 @@
         }
 
         .letter-to {
-            font-weight: bold;
-            color: #e75480;
+            font-weight: 600;
+            color: #c9185a;
             margin-bottom: 25px;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             text-align: center;
             font-style: italic;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 0 10px;
         }
-        
+
         .letter-to::before,
         .letter-to::after {
-            content: '❀';
-            margin: 0 10px;
-            color: #ffb3ba;
+            display: none;
         }
 
         .letter-body {
-            margin: 30px 0;
+            margin: 20px 0 25px;
             font-style: italic;
-            font-size: 2.5rem;
-            color: #ff0066;
-            font-weight: bold;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(255, 0, 102, 0.3);
-            font-family: 'Georgia', serif;
-            padding: 25px;
-            border-top: 3px solid rgba(231, 84, 128, 0.3);
-            border-bottom: 3px solid rgba(231, 84, 128, 0.3);
-            background: linear-gradient(135deg, 
-                rgba(255, 230, 240, 0.4), 
-                rgba(255, 182, 193, 0.2), 
-                rgba(255, 230, 240, 0.4));
-            border-radius: 15px;
-        }
-
-        .reservation-details {
-            background: linear-gradient(135deg, rgba(255, 245, 248, 0.5), rgba(255, 230, 240, 0.3));
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            border: 2px solid rgba(231, 84, 128, 0.2);
-            box-shadow: 0 4px 15px rgba(255, 154, 158, 0.15);
-        }
-
-        .reservation-title {
-            text-align: center;
             font-size: 1.6rem;
-            color: #e75480;
-            font-weight: bold;
-            margin-bottom: 25px;
-            font-family: 'Georgia', serif;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            border-left: 4px solid #ff758c;
-        }
-
-        .detail-label {
+            color: #c9185a;
             font-weight: 600;
-            color: #6b5b6e;
-            font-size: 1.1rem;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            padding: 20px 15px;
+            line-height: 1.6;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(201, 24, 90, 0.04) 0%, rgba(211, 175, 110, 0.04) 100%);
         }
 
-        .detail-value {
-            font-weight: bold;
-            color: #e75480;
+        .invitation-details {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px 20px;
+            border-radius: 8px;
+            background: none;
+        }
+
+        .invitation-details .detail-line {
+            padding: 8px 0;
             font-size: 1.15rem;
+            color: #5a4a3a;
+            letter-spacing: 0.5px;
+        }
+
+        .invitation-details .detail-line .label {
+            color: #8a7a6a;
+            font-weight: 400;
+        }
+
+        .invitation-details .detail-line .value {
+            color: #c9185a;
+            font-weight: 700;
+        }
+
+        .invitation-details .venue-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #c9185a;
+            margin-bottom: 18px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 3px;
         }
 
         .letter-from {
             text-align: center;
-            margin-top: 30px;
-            font-weight: bold;
-            color: #e75480;
-            font-size: 1.3rem;
+            margin-top: 25px;
+            color: #8a7a6a;
+            font-size: 1.1rem;
             font-style: italic;
+            letter-spacing: 1px;
+            position: relative;
+            padding-top: 20px;
         }
-        
-        .letter-from::before,
-        .letter-from::after {
-            content: '❀';
-            margin: 0 10px;
-            color: #ffb3ba;
+
+        .letter-from::before {
+            display: none;
+        }
+
+        .letter-from .name {
+            display: block;
+            margin-top: 12px;
+            color: #c9185a;
+            font-size: 1.3rem;
+            font-weight: 600;
+            font-style: normal;
+            font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+            font-size: 1.8rem;
         }
 
         .close-letter {
@@ -946,10 +1166,9 @@
         /* Download button */
         .download-buttons {
             display: none;
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 501;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
         }
 
         .letter.expanded .download-buttons {
@@ -967,9 +1186,9 @@
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
-            width: 55px;
-            height: 55px;
-            display: flex;
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
         }
@@ -981,24 +1200,340 @@
 
         /* Responsive design */
         @media (max-width: 768px) {
-            .letter-header h1 {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            /* Envelope responsive */
+            .envelope {
+                width: 280px;
+                height: 185px;
+                margin: 20px 0;
+            }
+
+            .envelope-back {
+                width: 280px;
+                height: 165px;
+                border-radius: 4px 4px 10px 10px;
+            }
+
+            .layer-accent {
+                width: 85%;
+                height: 2px;
+                top: 75px;
+            }
+
+            .wax-seal {
+                width: 65px;
+                height: 65px;
+                top: 60px;
                 font-size: 1.8rem;
             }
-            
+
+            .wax-seal::before {
+                font-size: 1.5rem;
+            }
+
+            .envelope-flap {
+                border-left: 140px solid transparent;
+                border-right: 140px solid transparent;
+                border-top: 95px solid #d32f5e;
+            }
+
+            .envelope-flap::before {
+                width: 280px;
+                height: 95px;
+                top: -95px;
+                left: -140px;
+            }
+
+            .tap-hint {
+                bottom: -35px;
+                font-size: 0.85rem;
+            }
+
+            /* Letter responsive */
+            .letter {
+                width: 250px;
+                height: 140px;
+                padding: 15px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .letter-header h1 {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+
+            .letter-header .hearts {
+                font-size: 1.3rem;
+                margin-top: 5px;
+                letter-spacing: 5px;
+            }
+
+            .letter-header::before {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+            }
+
+            .letter-header::after {
+                width: 60px;
+                margin: 10px auto 0;
+            }
+
+            .letter-content {
+                font-size: 0.95rem;
+                line-height: 1.8;
+                padding: 10px 0;
+            }
+
+            .letter-to {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                padding: 0 10px;
+            }
+
+            .letter-to::before,
+            .letter-to::after {
+                margin: 0 5px;
+                font-size: 0.85rem;
+            }
+
             .letter-body {
-                font-size: 1.6rem;
-            }
-            
-            .reservation-title {
                 font-size: 1.2rem;
+                margin: 15px 0 18px;
+                padding: 15px 10px;
             }
-            
-            .detail-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+
+            .invitation-details {
+                margin: 18px 0;
+                padding: 15px 12px;
+                border-radius: 6px;
+            }
+
+            .invitation-details .venue-name {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+                letter-spacing: 1px;
+            }
+
+            .invitation-details .detail-line {
+                padding: 5px 0;
+                font-size: 0.95rem;
+            }
+
+            .letter-from {
+                margin-top: 18px;
+                padding-top: 15px;
+                font-size: 0.95rem;
+            }
+
+            .letter-from::before {
+                font-size: 0.85rem;
+                margin-bottom: 8px;
+            }
+
+            .letter-from .name {
+                font-size: 1.4rem;
+                margin-top: 6px;
+            }
+
+            .download-buttons {
+                margin-top: 15px;
+                padding-top: 15px;
+            }
+
+            .btn-download {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            /* Letter expanded responsive */
+            .letter.expanded {
+                padding: 30px 20px !important;
+                max-width: 95vw !important;
+                max-height: 85vh !important;
+            }
+
+            .close-letter {
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+                top: 20px;
+                right: 15px;
+            }
+
+            .letter-container.show {
+                background: rgba(0, 0, 0, 0.7);
             }
         }
+
+        /* Extra small devices (iPhone XS Max and similar) */
+        @media (max-width: 430px) {
+            .envelope {
+                width: 260px;
+                height: 170px;
+                margin: 15px 0;
+            }
+
+            .envelope-back {
+                width: 260px;
+                height: 150px;
+            }
+
+            .wax-seal {
+                width: 60px;
+                height: 60px;
+                top: 50px;
+                font-size: 1.6rem;
+            }
+
+            .wax-seal::before {
+                font-size: 1.3rem;
+            }
+
+            .envelope-flap {
+                border-left: 130px solid transparent;
+                border-right: 130px solid transparent;
+                border-top: 85px solid #d32f5e;
+            }
+
+            .envelope-flap::before {
+                width: 260px;
+                height: 85px;
+                top: -85px;
+                left: -130px;
+            }
+
+            .layer-accent {
+                width: 80%;
+                top: 60px;
+            }
+
+            .letter {
+                width: 230px;
+                height: 125px;
+                padding: 12px;
+                left: 15px;
+            }
+
+            .letter-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .letter-header .hearts {
+                font-size: 1.1rem;
+                letter-spacing: 4px;
+                margin-top: 4px;
+            }
+
+            .letter-header::before {
+                font-size: 0.8rem;
+                margin-bottom: 6px;
+            }
+
+            .letter-to {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .letter-to::before,
+            .letter-to::after {
+                font-size: 0.75rem;
+                margin: 0 3px;
+            }
+
+            .letter-body {
+                font-size: 1.05rem;
+                margin: 12px 0 15px;
+                padding: 12px 8px;
+            }
+
+            .invitation-details {
+                margin: 15px 0;
+                padding: 12px 10px;
+            }
+
+            .invitation-details .venue-name {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .invitation-details .detail-line {
+                font-size: 0.9rem;
+                padding: 4px 0;
+            }
+
+            .letter-from {
+                margin-top: 15px;
+                padding-top: 12px;
+                font-size: 0.9rem;
+            }
+
+            .letter-from::before {
+                font-size: 0.75rem;
+                margin-bottom: 6px;
+            }
+
+            .letter-from .name {
+                font-size: 1.2rem;
+                margin-top: 4px;
+            }
+
+            .btn-download {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+
+            .letter.expanded {
+                padding: 25px 15px !important;
+                margin-top: 10px !important;
+            }
+
+            .close-letter {
+                width: 45px;
+                height: 45px;
+                font-size: 1.8rem;
+                top: 15px;
+                right: 12px;
+            }
+        }
+
+        /* iPhone XS Max specific (larger phone optimization) */
+        @media (min-width: 375px) and (max-width: 430px) {
+            .envelope {
+                width: 270px;
+            }
+
+            .envelope-back {
+                width: 270px;
+            }
+
+            .envelope-flap {
+                border-left: 135px solid transparent;
+                border-right: 135px solid transparent;
+                border-top: 88px solid #d32f5e;
+            }
+
+            .envelope-flap::before {
+                width: 270px;
+                height: 88px;
+                top: -88px;
+                left: -135px;
+            }
+
+            .letter {
+                width: 240px;
+            }
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -1062,51 +1597,44 @@
     <!-- Letter Container -->
     <div class="letter-container" id="letterContainer">
         <div class="envelope" id="envelope" onclick="openLetter()">
-            <div class="envelope-back"></div>
+            <div class="envelope-back">
+                <div class="layer-accent"></div>
+            </div>
+            <div class="wax-seal"></div>
             <div class="envelope-flap"></div>
             <div class="letter">
                 <button class="close-letter" onclick="closeLetter(event)">×</button>
                 <div class="letter-header">
                     <h1>Shën Valentin 2026</h1>
-                    <div class="hearts">💕 💖 💕</div>
+                    <div class="hearts">♥ ♥ ♥</div>
                 </div>
                 <div class="letter-content">
-                    <div class="letter-to">Per Klea Murati</div>
+                    <div class="letter-to">Për Klea Murati</div>
                     <div class="letter-body">
-                        Ftese per Shen Valentin
+                        Ftesë<br>
+                        për një drekë Shën Valentini
                     </div>
                     
-                    <div class="reservation-details">
-                        <div class="reservation-title">📍 Amo Sushi Reservation</div>
-                        <div class="detail-row">
-                            <span class="detail-label">📅 Data:</span>
-                            <span class="detail-value">14 Shkurt 2026</span>
+                    <div class="invitation-details">
+                        <div class="venue-name">~ Amo Sushi ~</div>
+                        <div class="detail-line">
+                            <span class="label">Data:</span> <span class="value">14 Shkurt 2026</span>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">🕐 Ora:</span>
-                            <span class="detail-value">13:30</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">👥 Numri i Personave:</span>
-                            <span class="detail-value">2 Persona</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">📞 Telefon:</span>
-                            <span class="detail-value">0684670347</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">✉️ Email:</span>
-                            <span class="detail-value">gabriel.toska@gmail.com</span>
+                        <div class="detail-line">
+                            <span class="label">Ora:</span> <span class="value">13:30</span>
                         </div>
                     </div>
                     
-                    <div class="letter-from">Nga Gabriel Toska 💕</div>
-                </div>
-                <div class="download-buttons">
-                    <button class="btn-download" onclick="downloadAsPDF(event)" title="Download as PDF">📄</button>
+                    <div class="letter-from">
+                        Me dashuri,
+                        <span class="name">Gabriel Toska 💕</span>
+                    </div>
+                    <div class="download-buttons">
+                        <button class="btn-download" onclick="downloadAsPDF(event)" title="Shkarko Ftesën">�</button>
+                    </div>
                 </div>
             </div>
-            <div class="tap-hint">👆 Kliko për të hapur zarfin</div>
+            <div class="tap-hint">Hape Zarfin</div>
         </div>
     </div>
 
@@ -1233,10 +1761,10 @@
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Shën Valentin 2026 - Ftese</title>
+                    <title>Shën Valentin 2026 - Ftesë</title>
                     <style>
                         @page { 
-                            margin: 1.5cm;
+                            margin: 2cm;
                             size: A4;
                         }
                         * {
@@ -1246,97 +1774,89 @@
                         }
                         body {
                             font-family: 'Georgia', serif;
-                            background: linear-gradient(135deg, #fff9f9 0%, #ffffff 50%, #fff5f8 100%);
-                            padding: 30px;
+                            background: #fffdf8;
+                            padding: 40px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
                         }
                         .card {
-                            max-width: 700px;
+                            max-width: 550px;
                             margin: 0 auto;
-                            background: linear-gradient(135deg, #fff9f9 0%, #ffffff 50%, #fff5f8 100%);
-                            border-radius: 20px;
-                            box-shadow: 0 20px 60px rgba(231, 84, 128, 0.3);
-                            padding: 40px;
-                            border: 5px double #e75480;
-                        }
-                        .header {
+                            background: #fffdf8;
+                            padding: 50px 40px;
                             text-align: center;
-                            margin-bottom: 25px;
-                            padding: 20px;
-                            border-bottom: 4px double #ff9a9e;
-                            background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 154, 158, 0.15));
-                            border-radius: 15px;
                         }
                         .header h1 {
                             font-size: 2.5rem;
-                            color: #e75480;
-                            margin-bottom: 10px;
+                            color: #c2185b;
+                            margin-bottom: 8px;
                             font-family: 'Brush Script MT', cursive;
+                            letter-spacing: 2px;
                         }
                         .hearts {
-                            font-size: 2rem;
-                            margin-top: 10px;
+                            font-size: 1.5rem;
+                            margin-top: 8px;
+                            letter-spacing: 8px;
+                            color: #c2185b;
+                        }
+                        .divider {
+                            width: 80px;
+                            height: 2px;
+                            background: #d4a574;
+                            margin: 20px auto;
                         }
                         .to {
-                            font-weight: bold;
-                            color: #e75480;
+                            font-weight: 600;
+                            color: #c2185b;
                             margin: 25px 0;
                             font-size: 1.3rem;
-                            text-align: center;
                             font-style: italic;
+                            letter-spacing: 1px;
                         }
                         .body-text {
-                            margin: 30px 0;
+                            margin: 25px 0 30px;
                             font-style: italic;
-                            font-size: 2.2rem;
-                            color: #ff0066;
-                            font-weight: bold;
-                            text-align: center;
-                            padding: 25px;
-                            border-top: 3px solid rgba(231, 84, 128, 0.3);
-                            border-bottom: 3px solid rgba(231, 84, 128, 0.3);
-                            background: linear-gradient(135deg, rgba(255, 230, 240, 0.4), rgba(255, 182, 193, 0.2));
-                            border-radius: 15px;
-                        }
-                        .reservation {
-                            background: linear-gradient(135deg, rgba(255, 245, 248, 0.5), rgba(255, 230, 240, 0.3));
-                            border-radius: 15px;
-                            padding: 25px;
-                            margin: 30px 0;
-                            border: 2px solid rgba(231, 84, 128, 0.2);
-                        }
-                        .reservation-title {
-                            text-align: center;
-                            font-size: 1.5rem;
-                            color: #e75480;
-                            font-weight: bold;
-                            margin-bottom: 20px;
-                        }
-                        .detail {
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 12px 15px;
-                            margin: 10px 0;
-                            background: rgba(255, 255, 255, 0.8);
-                            border-radius: 10px;
-                            border-left: 4px solid #ff758c;
-                        }
-                        .detail-label {
+                            font-size: 1.4rem;
+                            color: #c2185b;
                             font-weight: 600;
-                            color: #6b5b6e;
-                            font-size: 1.1rem;
+                            padding: 15px;
+                            line-height: 1.6;
                         }
-                        .detail-value {
-                            font-weight: bold;
-                            color: #e75480;
-                            font-size: 1.1rem;
+                        .details {
+                            margin: 25px 0;
+                            padding: 20px 0;
+                            border-top: 1px solid rgba(200, 170, 130, 0.3);
+                            border-bottom: 1px solid rgba(200, 170, 130, 0.3);
                         }
+                        .venue {
+                            font-size: 1.4rem;
+                            font-weight: 700;
+                            color: #c2185b;
+                            margin-bottom: 15px;
+                            letter-spacing: 2px;
+                        }
+                        .detail-line {
+                            padding: 6px 0;
+                            font-size: 1.1rem;
+                            color: #5a4a3a;
+                        }
+                        .detail-line .label { color: #8a7a6a; }
+                        .detail-line .value { color: #c2185b; font-weight: 600; }
                         .from {
-                            text-align: center;
                             margin-top: 30px;
-                            font-weight: bold;
-                            color: #e75480;
-                            font-size: 1.3rem;
+                            color: #8a7a6a;
+                            font-size: 1rem;
                             font-style: italic;
+                        }
+                        .from .name {
+                            display: block;
+                            margin-top: 8px;
+                            color: #c2185b;
+                            font-size: 1.6rem;
+                            font-family: 'Brush Script MT', cursive;
+                            font-style: normal;
                         }
                     </style>
                 </head>
@@ -1344,34 +1864,24 @@
                     <div class="card">
                         <div class="header">
                             <h1>Shën Valentin 2026</h1>
-                            <div class="hearts">💕 💖 💕</div>
+                            <div class="hearts">♥ ♥ ♥</div>
                         </div>
-                        <div class="to">❀ Per Klea Murati ❀</div>
-                        <div class="body-text">Ftese per Shen Valentin</div>
-                        <div class="reservation">
-                            <div class="reservation-title">📍 Amo Sushi Reservation</div>
-                            <div class="detail">
-                                <span class="detail-label">📅 Data:</span>
-                                <span class="detail-value">14 Shkurt 2026</span>
+                        <div class="divider"></div>
+                        <div class="to">Për Klea Murati</div>
+                        <div class="body-text">Ftesë<br>për një drekë të Shën Valentini</div>
+                        <div class="details">
+                            <div class="venue">~ Amo Sushi ~</div>
+                            <div class="detail-line">
+                                <span class="label">Data:</span> <span class="value">14 Shkurt 2026</span>
                             </div>
-                            <div class="detail">
-                                <span class="detail-label">🕐 Ora:</span>
-                                <span class="detail-value">13:30</span>
-                            </div>
-                            <div class="detail">
-                                <span class="detail-label">👥 Numri i Personave:</span>
-                                <span class="detail-value">2 Persona</span>
-                            </div>
-                            <div class="detail">
-                                <span class="detail-label">📞 Telefon:</span>
-                                <span class="detail-value">0684670347</span>
-                            </div>
-                            <div class="detail">
-                                <span class="detail-label">✉️ Email:</span>
-                                <span class="detail-value">gabriel.toska@gmail.com</span>
+                            <div class="detail-line">
+                                <span class="label">Ora:</span> <span class="value">13:30</span>
                             </div>
                         </div>
-                        <div class="from">❀ Nga Gabriel Toska 💕 ❀</div>
+                        <div class="from">
+                            Me dashuri,
+                            <span class="name">Gabriel Toska 💕</span>
+                        </div>
                     </div>
                 </body>
                 </html>
