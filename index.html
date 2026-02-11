@@ -285,15 +285,140 @@
             animation: popIn 0.5s ease-out;
         }
 
-        .envelope {
-            font-size: 150px;
+        /* Professional Envelope Design */
+        .envelope-wrapper {
+            perspective: 1000px;
             cursor: pointer;
-            transition: transform 0.3s;
-            animation: pulse 1.5s ease-in-out infinite;
+            margin: 20px auto;
         }
 
-        .envelope:hover {
-            transform: scale(1.1);
+        .envelope-container {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            margin: 0 auto;
+        }
+
+        /* Envelope body */
+        .envelope-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #f5e6d3 0%, #e8d4c0 100%);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Envelope back flap (triangular) */
+        .envelope-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #f5e6d3 0%, #e8d4c0 100%);
+            border-radius: 8px;
+        }
+
+        /* The letter inside - hidden initially */
+        .letter-inside {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 140px;
+            background: white;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #e91e63;
+        }
+
+        /* Envelope front flap (the top triangle that opens) */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(180deg, #ecdcc8 0%, #e0ccb5 100%);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top center;
+            transition: transform 0.6s ease;
+            z-index: 10;
+        }
+
+        /* Heart seal on the envelope */
+        .envelope-seal {
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            z-index: 15;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            transition: all 0.3s ease;
+        }
+
+        /* Bottom fold design */
+        .envelope-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(0deg, #ecdcc8 0%, #f5e6d3 100%);
+            clip-path: polygon(0 100%, 50% 20%, 100% 100%);
+        }
+
+        /* Side folds */
+        .envelope-left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #dbc9b5 0%, transparent 100%);
+            clip-path: polygon(0 0, 100% 50%, 0 100%);
+            opacity: 0.3;
+        }
+
+        .envelope-right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(-90deg, #dbc9b5 0%, transparent 100%);
+            clip-path: polygon(100% 0, 0 50%, 100% 100%);
+            opacity: 0.3;
+        }
+
+        /* Hover effect */
+        .envelope-wrapper:hover .envelope-seal {
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        /* Opened state */
+        .envelope-wrapper.opened .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-wrapper.opened .envelope-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+
+        .envelope-wrapper.opened .letter-inside {
+            opacity: 1;
+            transform: translateY(-80px);
         }
 
         .envelope-text {
@@ -317,32 +442,85 @@
             background: linear-gradient(135deg, #fff5f5 0%, #ffe4e8 100%);
             border: 3px solid #ff69b4;
             border-radius: 20px;
-            padding: 40px;
-            max-width: 400px;
+            padding: 30px;
+            max-width: 420px;
             margin: 0 auto;
             box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
         }
 
         .card-header {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #e91e63;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .card-penguin {
-            font-size: 80px;
-            margin: 20px 0;
+            font-size: 60px;
+            margin: 15px 0;
         }
 
         .card-message {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #c2185b;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Reservation details styling */
+        .reservation-box {
+            background: white;
+            border: 2px dashed #ff69b4;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .reservation-title {
+            font-size: 1.3rem;
+            color: #e91e63;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .reservation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dotted #ffb6c1;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .reservation-item:last-child {
+            border-bottom: none;
+        }
+
+        .reservation-label {
+            font-weight: bold;
+            color: #c2185b;
+        }
+
+        .reservation-value {
+            color: #333;
+        }
+
+        .restaurant-name {
+            font-size: 1.4rem;
+            color: #e91e63;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .card-signature {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #e91e63;
             font-style: italic;
             margin-top: 20px;
@@ -430,8 +608,20 @@
 
         <!-- Envelope Section -->
         <div class="envelope-section" id="envelopeSection">
-            <div class="envelope" onclick="openCard()">💌</div>
-            <p class="envelope-text">Tap the envelope to open! 💕</p>
+            <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+                <div class="envelope-container">
+                    <div class="envelope-body">
+                        <div class="envelope-back"></div>
+                        <div class="letter-inside">💕 Your Surprise! 💕</div>
+                        <div class="envelope-left"></div>
+                        <div class="envelope-right"></div>
+                        <div class="envelope-bottom"></div>
+                    </div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-seal">❤️</div>
+                </div>
+            </div>
+            <p class="envelope-text" id="envelopeText">Tap the envelope to open! 💕</p>
         </div>
 
         <!-- Card Section -->
@@ -440,10 +630,39 @@
                 <div class="card-header">💕 Happy Valentine's Day! 💕</div>
                 <div class="card-penguin">🐧❤️🐧</div>
                 <p class="card-message">
-                    You make my heart flutter like a penguin's wings! 
-                    Every moment with you is magical. 
-                    Thank you for being my Valentine! 💝
+                    I have a special surprise for you, my love! 
+                    Let's celebrate our love together! 💝
                 </p>
+                
+                <div class="reservation-box">
+                    <div class="reservation-title">🍣 Our Valentine's Date 🍣</div>
+                    <div class="reservation-item">
+                        <span class="reservation-label">📅 Date:</span>
+                        <span class="reservation-value">14/02/2026</span>
+                    </div>
+                    <div class="reservation-item">
+                        <span class="reservation-label">🕐 Time:</span>
+                        <span class="reservation-value">13:30</span>
+                    </div>
+                    <div class="reservation-item">
+                        <span class="reservation-label">👤 Name:</span>
+                        <span class="reservation-value">Gabriel</span>
+                    </div>
+                    <div class="reservation-item">
+                        <span class="reservation-label">👥 Guests:</span>
+                        <span class="reservation-value">2</span>
+                    </div>
+                    <div class="reservation-item">
+                        <span class="reservation-label">📞 Phone:</span>
+                        <span class="reservation-value">0684670347</span>
+                    </div>
+                    <div class="reservation-item">
+                        <span class="reservation-label">✉️ Email:</span>
+                        <span class="reservation-value">gabriel.toska@gmail.com</span>
+                    </div>
+                    <div class="restaurant-name">🏮 Amo Sushi 🏮</div>
+                </div>
+                
                 <div class="card-signature">With all my love,<br>Your Penguin 🐧💕</div>
                 <div class="card-hearts">💕💗💖💝💘</div>
             </div>
@@ -549,6 +768,21 @@
             document.getElementById('successSection').classList.remove('visible');
             document.getElementById('successSection').style.display = 'none';
             document.getElementById('envelopeSection').classList.add('visible');
+        }
+
+        // Open the envelope with animation
+        function openEnvelope() {
+            const wrapper = document.getElementById('envelopeWrapper');
+            const text = document.getElementById('envelopeText');
+            
+            if (wrapper.classList.contains('opened')) {
+                // Already opened, go to card
+                openCard();
+            } else {
+                // Open envelope animation
+                wrapper.classList.add('opened');
+                text.textContent = 'Tap again to see your surprise! 💕';
+            }
         }
 
         // Open the card
